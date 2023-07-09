@@ -3,7 +3,6 @@ const Schema = mongoose.Schema;
 
 const ApiKeySchema = Schema({
     token: {type: String, required: true,},
-    deviceId: {type: String, required: true},
 }, {
     timestamps: true
 });

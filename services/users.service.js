@@ -4,6 +4,8 @@ const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const hat = require("hat");
 const AuthenticationMixin = require("../mixins/authentication.mixin");
+const { MoleculerError } = require("moleculer").Errors;
+const UserExistsError = require("../exceptions/userExists.error");
 
 module.exports = {
 	name: "users",
@@ -48,19 +50,32 @@ module.exports = {
 				user.password = bcrypt.hashSync(user.password, 10);
 				user.apiKeys.push({
 					token: hat(256),
-					deviceId: hat(), // TODO: get device id from request
 				});
 
 				try
 				{
-					await user.save();
-				} catch (err) {
-					console.error(`HIBA: ${err}`);
-				}
+					//Check if email already exists
+					const existingUser = await User.findOne({email: user.email});
+					if (existingUser)
+					{
+						console.error("Email already exists");
+						
+						throw new UserExistsError();
+					}
+					else
+					{
+						await user.save();
 
-                const response = await this.transformDocuments(ctx, {}, user);
-                response.apiKey = user.apiKeys;
-                return response;
+						const response = await this.transformDocuments(ctx, {}, user);
+                		response.apiKey = user.apiKeys;
+                		return response;
+					}
+				} catch (err) {
+					if (err instanceof MoleculerError)
+					{
+						throw err;
+					}
+				} 
 			},
 		},
 

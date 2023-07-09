@@ -28,13 +28,26 @@ module.exports = {
 		routes: [
 			{
 				path: "/api",
-
+				isAdmin: false,
 				whitelist: [
-					"**"
+					// Users
+					"users.create",
+					"users.me",
+					"users.login",
+					"users.get",
 				],
 
 				// Route-level Express middlewares. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Middlewares
 				use: [],
+
+				cors: {
+					origin: "*",
+					methods: ["GET", "OPTIONS", "POST", "PUT", "DELETE"],
+					allowedHeaders: ["Content-Type", "api-key"],
+					exposedHeaders: [],
+					credentials: false,
+					maxAge: 3600
+				},
 
 				// Enable/disable parameter merging method. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Disable-merging
 				mergeParams: true,
@@ -50,7 +63,8 @@ module.exports = {
 				autoAliases: true,
 
 				aliases: {
-
+					"POST /users/login": "users.login",
+					"GET /users/get/:id": "users.get",
 				},
 
 				/**
@@ -100,13 +114,23 @@ module.exports = {
 			},
 			{
 				path: "/admin",
-
+				isAdmin: true,
 				whitelist: [
-					""
+					// Contacts
+					"admin.contacts.create",
 				],
 
 				// Route-level Express middlewares. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Middlewares
 				use: [],
+
+				cors: {
+					origin: "*",
+					methods: ["GET", "OPTIONS", "POST", "PUT", "DELETE"],
+					allowedHeaders: ["Content-Type", "api-key"],
+					exposedHeaders: [],
+					credentials: false,
+					maxAge: 3600
+				},
 
 				// Enable/disable parameter merging method. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Disable-merging
 				mergeParams: true,
@@ -122,7 +146,6 @@ module.exports = {
 				autoAliases: true,
 
 				aliases: {
-
 				},
 
 				/**
@@ -205,8 +228,14 @@ module.exports = {
 				return null;
 			}
 
+			let authenticateAction = "users.findByApiKey";
+			if (route.opts.isAdmin) {
+				authenticateAction = "admin.users.findByApiKey";
+				ctx.meta.userIsAdmin = true;
+			}
+
 			if (apiKey) { // Check the token. Tip: call a service which verify the token. E.g. `accounts.resolveToken`
-				const user = await ctx.call("admin.users.findByApiKey", {apiKey: apiKey}); // Call the service to verify the token
+				const user = await ctx.call(authenticateAction, { apiKey });
 
 				if (user) { // If the user is exist, then we resolve it
 					return user; // The resolved user will be saved to `ctx.meta.user`
@@ -221,10 +250,6 @@ module.exports = {
 		},
 
 		/**
-		 * Authorize the request. Check that the authenticated user has right to access the resource.
-		 *
-		 * PLEASE NOTE, IT'S JUST AN EXAMPLE IMPLEMENTATION. DO NOT USE IN PRODUCTION!
-		 *
 		 * @param {Context} ctx
 		 * @param {Object} route
 		 * @param {IncomingRequest} req

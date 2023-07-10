@@ -17,8 +17,8 @@ module.exports = {
             },
 
             async handler(ctx) {
+                // Find the user by API key
                 const user = await this.adapter.findOne({ apiKeys: { $elemMatch: { token: ctx.params.apiKey } } });
-
                 return user;
             },
         },

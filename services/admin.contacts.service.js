@@ -18,23 +18,29 @@ module.exports = {
 		insert: false,
 		find: false,
 
+
 		create: {
+			auth: true,
 			rest: {
 				method: "POST",
 				fullPath: "/admin/contacts",
 				path: "/contacts",
 			},
 			params: {
-				contact: {
-					type: "object",
-				},
+				email: {type: "email", optional: true},
+				phone: {type: "string", optional: true},
+				address: {type: "string", optional: true},
 			},
 
 			async handler(ctx) {
-				const contact = new Contact(ctx.params.contact);
-
                 try
                 {
+					if (!ctx.params) { // TODO: Check if any of the params are missing
+						throw new Error("Missing parameters!");
+					}
+	
+					const contact = new Contact(ctx.params);
+
                     await contact.save();
                     
                     const response = await this.transformDocuments(ctx, {}, contact);

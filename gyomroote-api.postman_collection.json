@@ -1,0 +1,169 @@
+{
+	"info": {
+		"_postman_id": "c4cc7719-3d9e-4214-b2bf-e7467ae4f357",
+		"name": "gyomroote-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23341457"
+	},
+	"item": [
+		{
+			"name": "admin.users",
+			"item": []
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "Create user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user\": {\r\n        \"email\": \"tesztelek3@email.com\",\r\n        \"password\": \"Passw0rd\",\r\n        \"firstName\": \"User2\",\r\n        \"lastName\": \"User2\",\r\n        \"bio\": \"bio\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/api/users",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "api-key",
+								"value": "{{apiKey}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{server}}/api/users/me",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"tesztelek@email.com\",\r\n    \"password\": \"Passw0rd\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/api/users/login",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user by Id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "api-key",
+								"value": "{{apiKey}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{server}}/api/users/get/64aabc0e3afcdd9726359059",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"get",
+								"64aabc0e3afcdd9726359059"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "admin.contacts",
+			"item": [
+				{
+					"name": "Create contacts",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "api-key",
+								"value": "{{adminApiKey}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"email@email.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/admin/contacts",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"admin",
+								"contacts"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "localhost",
+			"value": "http://localhost:3000"
+		}
+	]
+}

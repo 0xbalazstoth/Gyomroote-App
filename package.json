@@ -34,7 +34,9 @@
     "moleculer-db-adapter-mongoose": "^0.9.2",
     "moleculer-web": "^0.10.4",
     "mongoose": "^6.11.2",
-    "nodemon": "^3.0.1"
+    "nodemailer": "^6.9.3",
+    "nodemon": "^3.0.1",
+    "vash": "^0.13.0"
   },
   "engines": {
     "node": ">= 16.x.x"

@@ -1,4 +1,4 @@
-"use strict";
+﻿"use strict";
 const DBMixin = require("../mixins/db.mixin");
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
@@ -75,21 +75,6 @@ module.exports = {
 						throw err;
 					}
 				}
-			},
-		},
-
-		/**
-		 * Get current user entity with API key
-		 * @actions
-		 * @returns {Object} - Authenticated user profile
-		 */
-		me: {
-			rest: {
-				method: "GET",
-				path: "/me",
-			},
-			async handler(ctx) {
-				return this.transformDocuments(ctx, {}, ctx.meta.user);
 			},
 		},
 	},

@@ -3,64 +3,67 @@ const hat = require("hat");
 const UserNotFoundError = require("../exceptions/userNotFound.error");
 
 module.exports = {
-    actions: {
-        /**
-         * @actions
-         * @param {String} apiKey - API key
-         * @returns {Object} - Authenticated user
-         */
-        findByApiKey: {
-            params: {
-                apiKey: {
-                    type: "string",
-                },
-            },
+	actions: {
+		/**
+		 * @actions
+		 * @param {String} apiKey - API key
+		 * @returns {Object} - Authenticated user
+		 */
+		findByApiKey: {
+			params: {
+				apiKey: {
+					type: "string",
+				},
+			},
 
-            async handler(ctx) {
-                // Find the user by API key
-                const user = await this.adapter.findOne({ apiKeys: { $elemMatch: { token: ctx.params.apiKey } } });
-                return user;
-            },
-        },
-        
-        login: {
-            auth: false,
-            params: {
-                email: {
-                    type: "email",
-                },
-                password: {
-                    type: "string",
-                },
-            },
+			async handler(ctx) {
+				// Find the user by API key
+				const user = await this.adapter.findOne({
+					apiKeys: { $elemMatch: { token: ctx.params.apiKey } },
+				});
+				return user;
+			},
+		},
 
-            async handler(ctx) {
-                const { email, password } = ctx.params;
+		login: {
+			auth: false,
+			params: {
+				email: {
+					type: "email",
+				},
+				password: {
+					type: "string",
+				},
+			},
 
-                const user = await this.adapter.findOne({ email });
+			async handler(ctx) {
+				const { email, password } = ctx.params;
 
-                if (!user)
-                {
-                    throw new UserNotFoundError();
-                }
+				const user = await this.adapter.findOne({ email });
 
-                const passwordMatch = await bcrypt.compare(password, user.password);
+				if (!user) {
+					throw new UserNotFoundError();
+				}
 
-                if (!passwordMatch)
-                {
-                    throw new UnAuthorizedError();
-                }
+				const passwordMatch = await bcrypt.compare(
+					password,
+					user.password
+				);
 
-                const apiKey = {
-                    token: hat(256),
-                };
+				if (!passwordMatch) {
+					throw new UnAuthorizedError();
+				}
 
-                user.apiKeys.push(apiKey);
+				const apiKey = {
+					token: hat(256),
+				};
 
-                await user.save();
-                const response = await this.transformDocuments(ctx, {}, user);
-                return { ...response, apiKeys: [apiKey] }
-            },
-        },
-    },
+				user.apiKeys.push(apiKey);
+
+				await user.save();
+				const response = await this.transformDocuments(ctx, {}, user);
+				return { ...response, apiKeys: [apiKey] };
+			},
+		},
+	},
 };

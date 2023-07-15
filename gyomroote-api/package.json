@@ -32,10 +32,12 @@
     "moleculer-db": "^0.8.20",
     "moleculer-db-adapter-mongo": "^0.4.15",
     "moleculer-db-adapter-mongoose": "^0.9.2",
+    "moleculer-io": "^2.2.0",
     "moleculer-web": "^0.10.4",
     "mongoose": "^6.11.2",
     "nodemailer": "^6.9.3",
     "nodemon": "^3.0.1",
+    "rss-parser": "^3.13.0",
     "vash": "^0.13.0"
   },
   "engines": {

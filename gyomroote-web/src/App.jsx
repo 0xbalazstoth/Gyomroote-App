@@ -12,9 +12,18 @@ function App() {
 
 	const joinRoom = () => {
 		if (username !== "" && room !== "") {
-			socket.emit("join_room", room);
+			const data = {
+				username: username,
+				room: room,
+			};
+
+			socket.emit("join_room", data);
 			setShowChat(true);
 		}
+	};
+
+	const handleShowChatChange = (value) => {
+		setShowChat(value);
 	};
 
 	return (
@@ -39,7 +48,13 @@ function App() {
 					<button onClick={joinRoom}>Csatlakozás</button>
 				</div>
 			) : (
-				<Chat socket={socket} username={username} room={room} />
+				<Chat
+					socket={socket}
+					username={username}
+					room={room}
+					showChat={showChat}
+					setShowChat={handleShowChatChange}
+				/>
 			)}
 		</div>
 	);

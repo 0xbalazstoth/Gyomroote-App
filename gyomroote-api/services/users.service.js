@@ -84,10 +84,7 @@ module.exports = {
 		 * @returns {Object} - Authenticated user profile
 		 */
 		me: {
-			rest: {
-				method: "GET",
-				path: "/me",
-			},
+			rest: "GET /me",
 			async handler(ctx) {
 				return this.transformDocuments(ctx, {}, ctx.meta.user);
 			},

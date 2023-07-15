@@ -2,14 +2,16 @@
 import ScrollToBottom from "react-scroll-to-bottom";
 import { v4 as uuidv4 } from "uuid";
 
-function Chat({ socket, username, room }) {
+function Chat({ socket, username, room, showChat, setShowChat }) {
 	const [currentMessage, setCurrentMessage] = useState("");
 	const [messageList, setMessageList] = useState([]);
+
+	// TODO: Preloading messages from the database and if the current username (UserContext) is the same as the author of the message, then the message type is 'you'.
 
 	const sendMessage = async () => {
 		if (currentMessage !== "") {
 			const messageData = {
-				id: uuidv4(), // Generate a unique ID for the message
+				id: uuidv4(),
 				room: room,
 				author: username,
 				message: currentMessage,
@@ -23,6 +25,17 @@ function Chat({ socket, username, room }) {
 			setMessageList((list) => [...list, messageData]);
 			setCurrentMessage("");
 		}
+	};
+
+	const disconnect = async () => {
+		const data = {
+			username: username,
+			room: room,
+		};
+
+		await socket.emit("leave_room", data);
+
+		setShowChat(false);
 	};
 
 	useEffect(() => {
@@ -87,6 +100,7 @@ function Chat({ socket, username, room }) {
 				/>
 				<button onClick={sendMessage}>Küldés</button>
 			</div>
+			<button onClick={disconnect}>Kilépés</button>
 		</div>
 	);
 }

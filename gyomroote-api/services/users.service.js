@@ -6,13 +6,14 @@ const hat = require("hat");
 const AuthenticationMixin = require("../mixins/authentication.mixin");
 const { MoleculerError } = require("moleculer").Errors;
 const UserExistsError = require("../exceptions/userExists.error");
+const PermissionActionType = require("../enums/permissionActionTypes.enum");
 
 module.exports = {
 	name: "users",
 	mixins: [DBMixin("users"), AuthenticationMixin],
 	model: User,
 	settings: {
-		fields: ["_id", "email", "firstName", "lastName", "bio"],
+		fields: ["_id", "email", "firstName", "lastName", "bio", "permissions"],
 		entityValidator: {
 			email: { type: "email" },
 			password: { type: "string" },

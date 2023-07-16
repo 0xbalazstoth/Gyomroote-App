@@ -5,7 +5,7 @@ const AuthenticationMixin = require("../mixins/authentication.mixin");
 
 module.exports = {
 	name: "admin.maps",
-	mixins: [DBMixin("maps"), AuthenticationMixin],
+	mixins: [DBMixin("maps")],
 	model: Map,
 
 	settings: {},

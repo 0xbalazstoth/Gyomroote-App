@@ -59,7 +59,7 @@ module.exports = {
 				authentication: true,
 
 				// Enable authorization. Implement the logic into `authorize` method. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Authorization
-				authorization: false,
+				authorization: true,
 
 				// The auto-alias feature allows you to declare your route alias directly in your services.
 				// The gateway will dynamically build the full routes from service schema.
@@ -124,6 +124,12 @@ module.exports = {
 
 					// Contacts
 					"admin.contacts.create",
+
+					// Permissions
+					"admin.permissions.createPermission",
+					"admin.permissions.updatePermission",
+					"admin.permissions.listPermissions",
+					"admin.permissions.assignPermissionsToUser",
 
 					// Maps
 					"admin.maps.create",
@@ -238,7 +244,7 @@ module.exports = {
 
 			let authenticateAction = "users.findByApiKey";
 			if (route.opts.isAdmin) {
-				authenticateAction = "admin.users.findByApiKey";
+				authenticateAction = "admin.adminUsers.findByApiKey";
 				ctx.meta.userIsAdmin = true;
 			}
 
@@ -273,10 +279,20 @@ module.exports = {
 			// Get the authenticated user.
 			const user = ctx.meta.user;
 
-			// It check the `auth` property in action schema.
-			if (req.$action.auth == "required" && !user) {
-				throw new ApiGateway.Errors.UnAuthorizedError("NO_RIGHTS");
+			if (user) {
+				const userPermissions = user.permissions;
+				const actionPermission = req.$action.permissionActionType;
+
+				console.log(userPermissions);
+				console.log(actionPermission);
 			}
+
+			// TODO: Check the user permission (role-based authorization)
+
+			// // It check the `auth` property in action schema.
+			// if (req.$action.auth == "required" && !user) {
+			// 	throw new ApiGateway.Errors.UnAuthorizedError("NO_RIGHTS");
+			// }
 		},
 	},
 };

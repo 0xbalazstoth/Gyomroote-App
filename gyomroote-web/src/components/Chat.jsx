@@ -1,10 +1,12 @@
 ﻿import React, { useEffect, useState } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
 import { v4 as uuidv4 } from "uuid";
+import EmojiPicker from "emoji-picker-react";
 
 function Chat({ socket, username, room, showChat, setShowChat }) {
 	const [currentMessage, setCurrentMessage] = useState("");
 	const [messageList, setMessageList] = useState([]);
+	const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 
 	// TODO: Preloading messages from the database and if the current username (UserContext) is the same as the author of the message, then the message type is 'you'.
 
@@ -36,6 +38,14 @@ function Chat({ socket, username, room, showChat, setShowChat }) {
 		await socket.emit("leave_room", data);
 
 		setShowChat(false);
+	};
+
+	const handleEmojiClick = (emojiData, event) => {
+		setCurrentMessage(currentMessage + " " + emojiData.emoji);
+	};
+
+	const toggleEmojiPicker = () => {
+		setShowEmojiPicker(!showEmojiPicker);
 	};
 
 	useEffect(() => {
@@ -101,6 +111,18 @@ function Chat({ socket, username, room, showChat, setShowChat }) {
 				<button onClick={sendMessage}>Küldés</button>
 			</div>
 			<button onClick={disconnect}>Kilépés</button>
+
+			<button onClick={toggleEmojiPicker}>Toggle Emoji Picker</button>
+			{showEmojiPicker && (
+				<div className="gy-emoji-picker">
+					<EmojiPicker
+						onEmojiClick={handleEmojiClick}
+						autoFocusSearch={false}
+						searchPlaceHolder="Keresés..."
+						skinTonesDisabled={true}
+					/>
+				</div>
+			)}
 		</div>
 	);
 }

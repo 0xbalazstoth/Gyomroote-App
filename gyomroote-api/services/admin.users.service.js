@@ -6,19 +6,19 @@ const hat = require("hat");
 const AuthenticationMixin = require("../mixins/authentication.mixin");
 
 module.exports = {
-	name: "admin.users",
+	name: "admin.adminUsers",
 	mixins: [DBMixin("adminUsers"), AuthenticationMixin],
 	model: AdminUser,
 	settings: {
 		entityValidator: {
 			email: { type: "email" },
-			password: { type: "string"},
-			firstName: { type: "string"},
-			lastName: { type: "string"},
+			password: { type: "string" },
+			firstName: { type: "string" },
+			lastName: { type: "string" },
 		},
 	},
 
-    actions: {
+	actions: {
 		count: false,
 		remove: false,
 		insert: false,
@@ -39,24 +39,22 @@ module.exports = {
 					token: hat(256),
 				});
 
-				try
-				{
+				try {
 					//Check if email already exists
-					const existingUser = await AdminUser.findOne({email: adminUser.email});
-					if (existingUser)
-					{
+					const existingUser = await AdminUser.findOne({
+						email: adminUser.email,
+					});
+					if (existingUser) {
 						throw new Error("Email already exists");
-					}
-					else
-					{
+					} else {
 						await adminUser.save();
 					}
 				} catch (err) {
 					console.error(err);
 				}
-				
+
 				return adminUser;
 			},
 		},
-    },
+	},
 };

@@ -119,6 +119,9 @@ module.exports = {
 				path: "/admin",
 				isAdmin: true,
 				whitelist: [
+					// Admin users
+					"admin.adminUsers.login",
+
 					// Contacts
 					"admin.contacts.create",
 
@@ -151,7 +154,9 @@ module.exports = {
 				// The gateway will dynamically build the full routes from service schema.
 				autoAliases: true,
 
-				aliases: {},
+				aliases: {
+					"POST /users/login": "admin.adminUsers.login",
+				},
 
 				/**
 				 * Before call hook. You can check the request.

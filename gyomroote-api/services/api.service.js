@@ -1,6 +1,7 @@
 "use strict";
 
 const ApiGateway = require("moleculer-web");
+// const Permission = require("../models/permission");
 
 /**
  * @typedef {import('moleculer').ServiceSchema} ServiceSchema Moleculer's Service Schema
@@ -38,6 +39,9 @@ module.exports = {
 
 					// RSS feeds
 					"rss.feed",
+
+					// Maps
+					"maps.updateMaps",
 				],
 
 				// Route-level Express middlewares. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Middlewares
@@ -68,6 +72,7 @@ module.exports = {
 				aliases: {
 					"POST /users/login": "users.login",
 					"GET /users/get/:id": "users.get",
+					"PUT /maps/update/:id": "maps.update",
 				},
 
 				/**
@@ -132,7 +137,8 @@ module.exports = {
 					"admin.permissions.assignPermissionsToUser",
 
 					// Maps
-					"admin.maps.create",
+					"maps.create",
+					"maps.updateMaps",
 				],
 
 				// Route-level Express middlewares. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Middlewares
@@ -276,18 +282,36 @@ module.exports = {
 		 * @returns {Promise}
 		 */
 		async authorize(ctx, route, req) {
-			// Get the authenticated user.
+			// TODO: Check the user permission (role-based authorization)
 			const user = ctx.meta.user;
 
 			if (user) {
-				const userPermissions = user.permissions;
+				const permissions = await ctx.call(
+					"admin.permissions.listPermissions"
+				);
+
+				// Filter permissions by user permissions with _id
+				const filteredUserPermissions = permissions.filter(
+					(permission) => {
+						return user.permissions.includes(permission._id);
+					}
+				);
+
 				const actionPermission = req.$action.permissionActionType;
 
-				console.log(userPermissions);
-				console.log(actionPermission);
-			}
+				const hasPermission = filteredUserPermissions.some(
+					(permission) => {
+						const actions = permission.actions;
+						return actions.includes(actionPermission);
+					}
+				);
 
-			// TODO: Check the user permission (role-based authorization)
+				if (!hasPermission) {
+					throw new ApiGateway.Errors.UnAuthorizedError(
+						ApiGateway.Errors.ERR_NO_PERMISSION
+					);
+				}
+			}
 
 			// // It check the `auth` property in action schema.
 			// if (req.$action.auth == "required" && !user) {

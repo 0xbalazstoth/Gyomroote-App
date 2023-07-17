@@ -15,9 +15,9 @@ module.exports = {
 		count: false,
 		insert: false,
 		find: false,
-		list: false,
 		update: false,
 		create: false,
+		list: false,
 
 		assignPermissionsToUser: {
 			auth: true,

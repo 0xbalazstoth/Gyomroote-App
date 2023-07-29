@@ -3,6 +3,11 @@ const Schema = mongoose.Schema;
 
 const AssignmentSchema = Schema({
 	name: { type: String, required: true, unique: true },
+	assignmentId: {
+		type: String,
+		required: true,
+		unique: true,
+	},
 });
 
 module.exports = mongoose.model("Assignment", AssignmentSchema);

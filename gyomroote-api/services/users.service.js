@@ -52,7 +52,6 @@ module.exports = {
 				});
 
 				try {
-					//Check if email already exists
 					const existingUser = await User.findOne({
 						email: user.email,
 					});

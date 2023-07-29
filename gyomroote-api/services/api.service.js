@@ -140,6 +140,7 @@ module.exports = {
 					"admin.assignments.createAssignment",
 					"admin.assignments.updateAssignment",
 					"admin.assignments.listAssignments",
+					"admin.assignments.setAssignmentToUserById",
 
 					// Maps
 					"maps.create",
@@ -291,11 +292,16 @@ module.exports = {
 		 */
 		async authorize(ctx, route, req) {
 			// TODO: Check the user permission (role-based authorization)
+			// TODO: Check the user assignment
 			const user = ctx.meta.user;
 
 			if (user) {
 				const permissions = await ctx.call(
 					"admin.permissions.listPermissions"
+				);
+
+				const assignments = await ctx.call(
+					"admin.assignments.listAssignments"
 				);
 
 				// Filter permissions by user permissions with _id

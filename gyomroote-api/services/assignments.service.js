@@ -2,6 +2,9 @@
 const PermissionActionTypes = require("../enums/permissionActionTypes.enum");
 const DBMixin = require("../mixins/db.mixin");
 const Assignment = require("../models/assignment");
+const User = require("../models/user");
+const AlreadySetError = require("../exceptions/alreadySet.error");
+const NotExistsError = require("../exceptions/notExists.error");
 
 module.exports = {
 	name: "admin.assignments",
@@ -97,6 +100,47 @@ module.exports = {
 					return response;
 				} catch (err) {
 					console.error(err);
+				}
+			},
+		},
+
+		setAssignmentToUserById: {
+			auth: true,
+			PermissionActionTypes: [PermissionActionTypes.UPDATE],
+			rest: {
+				method: "POST",
+				fullPath: "/admin/assignments/set-assignment-to-user/",
+				path: "/assignments/set-assignment-to-user/",
+			},
+			params: {
+				id: { type: "string" },
+				userId: { type: "string" },
+			},
+			async handler(ctx) {
+				try {
+					const assignment = await Assignment.findById(ctx.params.id);
+					const user = await User.findById(ctx.params.userId);
+
+					if (!assignment || !user) {
+						throw new NotExistsError(
+							"Assignment or user not exists!"
+						);
+					}
+
+					if (user.assignmentId == assignment.assignmentId) {
+						throw new AlreadySetError("Assignment already set!");
+					} else {
+						user.assignmentId = assignment.assignmentId;
+
+						await user.save();
+
+						return {
+							message: "Assignment set to user successfully!",
+							assignment: assignment.name,
+						};
+					}
+				} catch (err) {
+					throw err;
 				}
 			},
 		},

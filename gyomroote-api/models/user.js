@@ -12,7 +12,7 @@ const UserSchema = Schema(
 		profileImageUrl: { type: String, default: "/default.png" },
 		bio: { type: String },
 		permissions: { type: [Object], default: [] },
-		assignment: { type: String, default: "" },
+		assignmentId: { type: String, default: "tuzolto" },
 	},
 	{
 		timestamps: true,

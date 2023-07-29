@@ -28,6 +28,7 @@
     "dotenv": "^16.3.1",
     "hat": "^0.0.3",
     "ioredis": "^5.0.0",
+    "jsonwebtoken": "^9.0.1",
     "moleculer": "^0.14.26",
     "moleculer-db": "^0.8.20",
     "moleculer-db-adapter-mongo": "^0.4.15",

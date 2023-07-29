@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const hat = require("hat");
 const UserNotFoundError = require("../exceptions/userNotFound.error");
+const jwt = require("jsonwebtoken");
 
 module.exports = {
 	actions: {
@@ -17,11 +18,26 @@ module.exports = {
 			},
 
 			async handler(ctx) {
-				// Find the user by API key
-				const user = await this.adapter.findOne({
-					apiKeys: { $elemMatch: { token: ctx.params.apiKey } },
-				});
-				return user;
+				try {
+					const decoded = jwt.verify(
+						ctx.params.apiKey,
+						process.env.JWT_SECRET
+					);
+
+					if (!decoded) {
+						throw new TokenExpiredError("Token expired!");
+					}
+
+					const user = await this.adapter.findById(decoded.userId);
+
+					if (!user) {
+						throw new UserNotFoundError();
+					}
+
+					return user;
+				} catch (err) {
+					throw err;
+				}
 			},
 		},
 
@@ -45,6 +61,12 @@ module.exports = {
 					throw new UserNotFoundError();
 				}
 
+				const token = jwt.sign(
+					{ userId: user._id },
+					process.env.JWT_SECRET,
+					{ expiresIn: process.env.JWT_EXPIRES_IN }
+				);
+
 				const passwordMatch = await bcrypt.compare(
 					password,
 					user.password
@@ -55,7 +77,7 @@ module.exports = {
 				}
 
 				const apiKey = {
-					token: hat(256),
+					token: token,
 				};
 
 				user.apiKeys.push(apiKey);
@@ -64,6 +86,13 @@ module.exports = {
 				const response = await this.transformDocuments(ctx, {}, user);
 				return { ...response, apiKeys: [apiKey] };
 			},
+		},
+	},
+
+	methods: {
+		generateToken({ userId, secret, expiresIn }) {
+			console.log(userId, secret, expiresIn);
+			return jwt.sign({ userId }, secret, { expiresIn });
 		},
 	},
 };

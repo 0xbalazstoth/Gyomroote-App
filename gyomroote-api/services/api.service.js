@@ -1,7 +1,6 @@
 "use strict";
 
 const ApiGateway = require("moleculer-web");
-// const Permission = require("../models/permission");
 
 /**
  * @typedef {import('moleculer').ServiceSchema} ServiceSchema Moleculer's Service Schema
@@ -32,7 +31,6 @@ module.exports = {
 				isAdmin: false,
 				whitelist: [
 					// Users
-					"users.create",
 					"users.me",
 					"users.login",
 					"users.get",
@@ -127,6 +125,9 @@ module.exports = {
 					// Admin users
 					"admin.adminUsers.login",
 
+					// Users
+					"users.create",
+
 					// Contacts
 					"admin.contacts.create",
 
@@ -174,6 +175,7 @@ module.exports = {
 
 				aliases: {
 					"POST /users/login": "admin.adminUsers.login",
+					"POST /users/create": "users.create",
 					"PUT /maps/:id": "maps.updateMaps",
 					"PUT /assignments/:id":
 						"admin.assignments.updateAssignment",

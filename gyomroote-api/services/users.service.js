@@ -7,6 +7,8 @@ const AuthenticationMixin = require("../mixins/authentication.mixin");
 const { MoleculerError } = require("moleculer").Errors;
 const UserExistsError = require("../exceptions/userExists.error");
 const PermissionActionType = require("../enums/permissionActionTypes.enum");
+const jwt = require("jsonwebtoken");
+const PermissionActionTypes = require("../enums/permissionActionTypes.enum");
 
 module.exports = {
 	name: "users",
@@ -36,7 +38,7 @@ module.exports = {
 		 * @returns {Object} Created entity & API key
 		 */
 		create: {
-			auth: false,
+			auth: true,
 			params: {
 				user: {
 					type: "object",
@@ -47,8 +49,15 @@ module.exports = {
 				const user = new User(ctx.params.user);
 				await this.validateEntity(user);
 				user.password = bcrypt.hashSync(user.password, 10);
+
+				const token = jwt.sign(
+					{ userId: user._id },
+					process.env.JWT_SECRET,
+					{ expiresIn: process.env.JWT_EXPIRES_IN }
+				);
+
 				user.apiKeys.push({
-					token: hat(256),
+					token,
 				});
 
 				try {
@@ -85,6 +94,7 @@ module.exports = {
 		 */
 		me: {
 			rest: "GET /me",
+			permissionActionType: PermissionActionTypes.READ,
 			async handler(ctx) {
 				return this.transformDocuments(ctx, {}, ctx.meta.user);
 			},

@@ -72,7 +72,7 @@ module.exports = {
 				aliases: {
 					"POST /users/login": "users.login",
 					"GET /users/get/:id": "users.get",
-					"PUT /maps/update/:id": "maps.update",
+					"PUT /maps/:id": "maps.updateMaps",
 				},
 
 				/**
@@ -136,6 +136,11 @@ module.exports = {
 					"admin.permissions.listPermissions",
 					"admin.permissions.assignPermissionsToUser",
 
+					// Assignments
+					"admin.assignments.createAssignment",
+					"admin.assignments.updateAssignment",
+					"admin.assignments.listAssignments",
+
 					// Maps
 					"maps.create",
 					"maps.updateMaps",
@@ -168,6 +173,9 @@ module.exports = {
 
 				aliases: {
 					"POST /users/login": "admin.adminUsers.login",
+					"PUT /maps/:id": "maps.updateMaps",
+					"PUT /assignments/:id":
+						"admin.assignments.updateAssignment",
 				},
 
 				/**

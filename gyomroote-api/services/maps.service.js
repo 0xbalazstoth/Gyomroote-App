@@ -59,12 +59,6 @@ module.exports = {
 		updateMaps: {
 			auth: true,
 			permissionActionType: PermissionActionTypes.UPDATE,
-			rest: {
-				method: "PUT",
-				fullPath: "/api/maps/:id",
-				path: "/maps/:id",
-			},
-
 			async handler(ctx) {
 				try {
 					if (!ctx.params) {
@@ -96,5 +90,9 @@ module.exports = {
 		},
 	},
 
-	methods: {},
+	methods: {
+		assignmentMiddleware(user) {
+			console.log(user);
+		},
+	},
 };

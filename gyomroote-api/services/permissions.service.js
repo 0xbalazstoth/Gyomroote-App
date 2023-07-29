@@ -118,8 +118,6 @@ module.exports = {
 			},
 
 			async handler(ctx) {
-				// console.log(ctx.action.permissionActionType);
-
 				try {
 					if (!ctx.params) {
 						throw new Error("Missing parameters!");

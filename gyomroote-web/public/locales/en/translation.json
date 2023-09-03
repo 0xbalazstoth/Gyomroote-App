@@ -1,0 +1,12 @@
+﻿{
+	"language": {
+		"hu": "Hungarian",
+		"en": "English"
+	},
+	"word": {
+		"contact": "Contact"
+	},
+	"sentence": {
+		"welcome": "Welcome {{user}}!"
+	}
+}

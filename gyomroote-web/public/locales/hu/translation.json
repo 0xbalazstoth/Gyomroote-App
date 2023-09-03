@@ -1,0 +1,12 @@
+﻿{
+	"language": {
+		"hu": "Magyar",
+		"en": "Angol"
+	},
+	"word": {
+		"contact": "Kapcsolat"
+	},
+	"sentence": {
+		"welcome": "Üdvözlet {{user}}!"
+	}
+}

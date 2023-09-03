@@ -9,6 +9,6 @@ COPY package.json package-lock.json ./
 
 RUN npm install --production
 
-#COPY . .
+COPY . .
 
-CMD ["node", "/app/node_modules/moleculer/bin/moleculer-runner.js", "services"]
+CMD ["npm", "start"]

@@ -1,16 +1,15 @@
 ﻿import React, { useContext } from "react";
-import "./HomeView.scss";
 import LanguageContext from "../../contexts/LanguageContext";
-import Container from "react-bootstrap/esm/Container";
+import "./ContactView.scss";
 
-const HomeView = () => {
+const ContactView = () => {
 	const { t, i18n } = useContext(LanguageContext);
 
 	return (
 		<div>
-			<h1>{t("sentence.welcome")}</h1>
+			<h1>{t("word.contact")}</h1>
 		</div>
 	);
 };
 
-export default HomeView;
+export default ContactView;

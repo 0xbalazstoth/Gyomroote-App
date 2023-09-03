@@ -4,12 +4,17 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ErrorView from "./views/Error/ErrorView";
 import { useTranslation } from "react-i18next";
 import LanguageContext from "./contexts/LanguageContext";
+import AboutView from "./views/About/AboutView";
+import DonateView from "./views/Donate/DonateView";
+import JoinView from "./views/Join/JoinView";
+import ContactView from "./views/Contact/ContactView";
+import HomeView from "./views/Home/HomeView";
 
 function App() {
 	const { t, i18n } = useTranslation();
 	const locales = {
-		en: { title: t("language.en") },
-		hu: { title: t("language.hu") },
+		en: { title: t("language.en"), code: "US" },
+		hu: { title: t("language.hu"), code: "HU" },
 	};
 
 	return (
@@ -18,19 +23,22 @@ function App() {
 				<BrowserRouter>
 					<TopBar></TopBar>
 					<Routes>
+						<Route path="/" element={<HomeView></HomeView>}></Route>
 						<Route
-							path="/"
-							element={
-								<h1>
-									{t("sentence.welcome", {
-										user: "username",
-									})}
-								</h1>
-							}
+							path="/about"
+							element={<AboutView></AboutView>}
 						></Route>
 						<Route
-							path="/kapcsolat"
-							element={<h1>{t("word.contact")}</h1>}
+							path="/donate"
+							element={<DonateView></DonateView>}
+						></Route>
+						<Route
+							path="/join"
+							element={<JoinView></JoinView>}
+						></Route>
+						<Route
+							path="/contact"
+							element={<ContactView></ContactView>}
 						></Route>
 						<Route
 							path="*"

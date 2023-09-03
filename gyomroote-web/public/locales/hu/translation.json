@@ -4,9 +4,15 @@
 		"en": "Angol"
 	},
 	"word": {
-		"contact": "Kapcsolat"
+		"contact": "Kapcsolat",
+		"home": "Főoldal",
+		"about": "Egyesületünkről",
+		"donate": "Támogatás",
+		"join": "Jelentkezés",
+		"language": "Nyelv"
 	},
 	"sentence": {
-		"welcome": "Üdvözlet {{user}}!"
+		"welcome_user": "Üdvözlet {{user}}!",
+		"welcome": "Üdvözöljük megújult weboldalunkon!"
 	}
 }

@@ -5,13 +5,14 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import "./TopBar.scss";
 import LanguageContext from "../../contexts/LanguageContext";
+import Flag from "react-flagkit";
 
 const TopBar = () => {
 	const { t, i18n, locales } = useContext(LanguageContext);
 	return (
 		<Navbar expand="md" className="sticky-top">
 			<Container fluid>
-				<Navbar.Brand href="#">Gyomroote</Navbar.Brand>
+				<Navbar.Brand href="/">Gyomroote</Navbar.Brand>
 				<Navbar.Toggle aria-controls="navbarScroll" />
 				<Navbar.Collapse id="navbarScroll">
 					<Nav
@@ -19,14 +20,15 @@ const TopBar = () => {
 						style={{ maxHeight: "100px" }}
 						navbarScroll
 					>
-						<Nav.Link href="/">Home</Nav.Link>
-						<Nav.Link href="/egyesuletunkrol">
-							Egyesületünkről
-						</Nav.Link>
-						<Nav.Link href="/tamogatas">Támogatás</Nav.Link>
-						<Nav.Link href="/jelentkezes">Jelentkezés</Nav.Link>
-						<Nav.Link href="/kapcsolat">Kapcsolat</Nav.Link>
-						<NavDropdown title="Nyelv" id="basic-nav-dropdown">
+						<Nav.Link href="/">{t("word.home")}</Nav.Link>
+						<Nav.Link href="/about">{t("word.about")}</Nav.Link>
+						<Nav.Link href="/donate">{t("word.donate")}</Nav.Link>
+						<Nav.Link href="/join">{t("word.join")}</Nav.Link>
+						<Nav.Link href="/contact">{t("word.contact")}</Nav.Link>
+						<NavDropdown
+							title={t("word.language")}
+							id="basic-nav-dropdown"
+						>
 							{Object.keys(locales).map((locale) => (
 								<NavDropdown.Item
 									key={locale}
@@ -39,7 +41,12 @@ const TopBar = () => {
 									type="submit"
 									onClick={() => i18n.changeLanguage(locale)}
 								>
-									{locales[locale].title}
+									<div>
+										<Flag
+											country={locales[locale].code}
+										></Flag>
+										{locales[locale].title}
+									</div>
 								</NavDropdown.Item>
 							))}
 						</NavDropdown>

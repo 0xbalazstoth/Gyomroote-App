@@ -4,9 +4,15 @@
 		"en": "English"
 	},
 	"word": {
-		"contact": "Contact"
+		"contact": "Contact",
+		"home": "Home",
+		"about": "About",
+		"donate": "Donate",
+		"join": "Join",
+		"language": "Language"
 	},
 	"sentence": {
-		"welcome": "Welcome {{user}}!"
+		"welcome_user": "Welcome {{user}}!",
+		"welcome": "Welcome to our new website!"
 	}
 }

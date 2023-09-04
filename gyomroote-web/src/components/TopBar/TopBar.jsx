@@ -15,11 +15,7 @@ const TopBar = () => {
 				<Navbar.Brand href="/">Gyomroote</Navbar.Brand>
 				<Navbar.Toggle aria-controls="navbarScroll" />
 				<Navbar.Collapse id="navbarScroll">
-					<Nav
-						className="topnav ml-auto mb-lg-0"
-						style={{ maxHeight: "100px" }}
-						navbarScroll
-					>
+					<Nav className="topnav ml-auto mb-lg-0" navbarScroll>
 						<Nav.Link href="/">{t("word.home")}</Nav.Link>
 						<Nav.Link href="/about">{t("word.about")}</Nav.Link>
 						<Nav.Link href="/donate">{t("word.donate")}</Nav.Link>

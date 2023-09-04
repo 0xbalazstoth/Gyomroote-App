@@ -1,6 +1,10 @@
 ﻿@use "../../styles/sass/abstracts/variables" as var;
 @use "../../styles/sass/base/colors" as colors;
 
+.navbar {
+	background-color: colors.$primary !important;
+}
+
 .topnav {
 	border: var.$border;
 	border-radius: var.$border-radius;
@@ -10,6 +14,18 @@
 	.nav-link,
 	.nav-item {
 		font-size: 15px !important;
+	}
+}
+
+@media screen and (min-width: 768px) {
+	.topnav {
+		max-height: 250px !important;
+	}
+}
+
+@media screen and (max-width: 786px) {
+	.topnav {
+		padding: 0 0 0 15px !important;
 	}
 }
 

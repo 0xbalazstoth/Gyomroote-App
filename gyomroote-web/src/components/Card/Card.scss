@@ -1,0 +1,33 @@
+﻿@use "../../styles/sass/base/colors" as colors;
+@use "../../styles/sass/abstracts/variables" as var;
+@use "../../styles/sass/abstracts/mixins" as mixins;
+
+.card-container {
+	display: flex;
+	flex-direction: column;
+	row-gap: 1.5vh;
+
+	.card-header {
+		display: flex;
+		flex-direction: row;
+		column-gap: 1.5vh;
+		padding-bottom: 1.2vh;
+		border-bottom: var.$border;
+
+		.card-title {
+			font-size: 2rem;
+			font-weight: bold;
+		}
+	}
+
+	.card-icon {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 5vh;
+		border-radius: 15px;
+		padding: 1vh;
+		font-size: 1.5rem;
+		box-shadow: colors.$shadow;
+	}
+}

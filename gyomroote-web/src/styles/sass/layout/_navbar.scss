@@ -1,1 +1,11 @@
-//This file is for create your style with relation on space of navbar
+@use "../base/colors" as colors;
+
+.nav-link,
+.nav-item,
+.navbar-brand {
+	color: colors.$text !important;
+}
+
+.navbar-toggler {
+	background-color: colors.$secondary !important;
+}

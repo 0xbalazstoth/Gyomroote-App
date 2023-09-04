@@ -9,6 +9,9 @@ import DonateView from "./views/Donate/DonateView";
 import JoinView from "./views/Join/JoinView";
 import ContactView from "./views/Contact/ContactView";
 import HomeView from "./views/Home/HomeView";
+import "./App.scss";
+import Footer from "./components/Footer/Footer";
+import LinkManager from "./managers/LinkManager";
 
 function App() {
 	const { t, i18n } = useTranslation();
@@ -18,26 +21,29 @@ function App() {
 	};
 
 	return (
-		<div className="App">
+		<div className="App layout">
 			<LanguageContext.Provider value={{ t, i18n, locales }}>
 				<BrowserRouter>
 					<TopBar></TopBar>
 					<Routes>
-						<Route path="/" element={<HomeView></HomeView>}></Route>
 						<Route
-							path="/about"
+							path={LinkManager.home}
+							element={<HomeView></HomeView>}
+						></Route>
+						<Route
+							path={LinkManager.about}
 							element={<AboutView></AboutView>}
 						></Route>
 						<Route
-							path="/donate"
+							path={LinkManager.donate}
 							element={<DonateView></DonateView>}
 						></Route>
 						<Route
-							path="/join"
+							path={LinkManager.join}
 							element={<JoinView></JoinView>}
 						></Route>
 						<Route
-							path="/contact"
+							path={LinkManager.contact}
 							element={<ContactView></ContactView>}
 						></Route>
 						<Route
@@ -45,6 +51,7 @@ function App() {
 							element={<ErrorView></ErrorView>}
 						></Route>
 					</Routes>
+					<Footer></Footer>
 				</BrowserRouter>
 			</LanguageContext.Provider>
 		</div>

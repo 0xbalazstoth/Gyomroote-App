@@ -10,13 +10,13 @@ import Flag from "react-flagkit";
 const TopBar = () => {
 	const { t, i18n, locales } = useContext(LanguageContext);
 	return (
-		<Navbar expand="md" className="sticky-top">
+		<Navbar expand="lg" className="sticky-top">
 			<Container fluid>
 				<Navbar.Brand href="/">Gyomroote</Navbar.Brand>
 				<Navbar.Toggle aria-controls="navbarScroll" />
 				<Navbar.Collapse id="navbarScroll">
 					<Nav
-						className="topnav ms-auto mb-2 mb-lg-0"
+						className="topnav ml-auto mb-lg-0"
 						style={{ maxHeight: "100px" }}
 						navbarScroll
 					>
@@ -51,6 +51,9 @@ const TopBar = () => {
 							))}
 						</NavDropdown>
 					</Nav>
+					<Navbar.Collapse className="justify-content-end">
+						<button>Bejelentkezés</button>
+					</Navbar.Collapse>
 				</Navbar.Collapse>
 			</Container>
 		</Navbar>

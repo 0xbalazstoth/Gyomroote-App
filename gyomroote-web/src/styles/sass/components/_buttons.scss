@@ -1,1 +1,8 @@
-//This file you will create your style for buttons inside of the project
+@use "../base/colors" as colors;
+
+button {
+	border-radius: 10px !important;
+	// background-image: colors.$darkish-red !important;
+	text-decoration: none !important;
+	border: none !important;
+}

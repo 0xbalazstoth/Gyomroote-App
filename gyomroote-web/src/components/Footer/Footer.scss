@@ -1,19 +1,9 @@
 ﻿@use "../../styles/sass/abstracts/variables" as var;
 @use "../../styles/sass/base/colors" as colors;
 
-.topnav {
+footer {
 	border: var.$border;
 	border-radius: var.$border-radius;
 	box-shadow: colors.$shadow;
 	background-image: colors.$dark-gradient;
-
-	.nav-link,
-	.nav-item {
-		font-size: 15px !important;
-	}
-}
-
-.navbar-brand {
-	font-weight: bold !important;
-	font-size: 30px !important;
 }

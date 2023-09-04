@@ -1,0 +1,21 @@
+﻿@use "./styles/sass/base/colors" as colors;
+@use "./styles/sass/layout/navbar" as *;
+@use "./styles/sass/components/buttons" as buttons;
+@use "./styles/sass/base/_typography";
+@use "./styles/sass/components/dropdown" as dropdown;
+
+body {
+	font-family: "Quicksand", sans-serif !important;
+	background-color: colors.$primary !important;
+	color: colors.$text !important;
+}
+
+.layout {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
+.main-layout {
+	flex-grow: 1;
+}

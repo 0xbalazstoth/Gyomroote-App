@@ -1,1 +1,4 @@
-//This file you will create your variables inside of the project
+@use "../base/colors" as colors;
+
+$border: 2px solid colors.$border;
+$border-radius: 15px;

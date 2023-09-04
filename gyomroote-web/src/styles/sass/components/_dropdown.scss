@@ -1,0 +1,47 @@
+﻿@use "../base/colors" as colors;
+@use "../abstracts/variables" as var;
+
+.dropdown-menu {
+	border: var.$border;
+	border-radius: var.$border-radius;
+	box-shadow: colors.$shadow;
+	background-image: colors.$dark-gradient;
+	background: transparent !important;
+
+	a {
+		color: colors.$text !important;
+
+		div {
+			display: flex;
+			flex-direction: row;
+			column-gap: 1vh;
+		}
+	}
+}
+
+.dropdown-item,
+.dropdown-item {
+	transition: all 0.3s ease-in-out;
+}
+
+.dropdown-item:focus,
+.dropdown-item:hover {
+	color: colors.$primary !important;
+	background-color: colors.$text !important;
+	border-radius: var.$border-radius !important;
+	transition: all 0.3s ease-in-out;
+}
+
+.dropdown .dropdown-menu {
+	display: block;
+	opacity: 0;
+	-webkit-transition: all 200ms ease-in;
+	-moz-transition: all 200ms ease-in;
+	-ms-transition: all 200ms ease-in;
+	-o-transition: all 200ms ease-in;
+	transition: all 200ms ease-in;
+}
+.dropdown:hover .dropdown-menu {
+	display: block;
+	opacity: 1;
+}

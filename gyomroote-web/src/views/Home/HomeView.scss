@@ -3,6 +3,10 @@
 @use "../../styles/sass/base/colors" as colors;
 
 .home-body {
+	.row {
+		row-gap: 6vh !important;
+	}
+
 	.hero-text-container {
 		display: flex;
 		justify-content: center;

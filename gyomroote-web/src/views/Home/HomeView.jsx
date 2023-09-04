@@ -6,6 +6,7 @@ import Main from "../../components/Main/Main";
 import Button from "react-bootstrap/esm/Button";
 import LinkManager from "../../managers/LinkManager";
 import Card from "../../components/Card/Card";
+import { faFire, faFireExtinguisher } from "@fortawesome/free-solid-svg-icons";
 
 const HomeView = () => {
 	const { t, i18n } = useContext(LanguageContext);
@@ -31,6 +32,7 @@ const HomeView = () => {
 						<div className="col-lg-6">
 							<Card
 								title={"Bemutatkozás"}
+								icon={faFire}
 								children={
 									<div>
 										<p>
@@ -63,6 +65,7 @@ const HomeView = () => {
 						<div className="col-lg-6">
 							<Card
 								title={"Toborzás"}
+								icon={faFireExtinguisher}
 								children={
 									<div>
 										<p>
